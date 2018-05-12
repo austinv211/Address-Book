@@ -16,8 +16,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+
+import java.awt.event.KeyEvent;
 
 
 public class Main extends Application {
@@ -40,6 +43,13 @@ public class Main extends Application {
         TextField emailField = new TextField();
         Button submitButton = new Button("Submit");
 
+        //set handler for submit button
+        submitButton.setOnAction(event -> {
+            System.out.println("firstName: " + firstNameField.getText());
+            System.out.println("lastName: " + lastNameField.getText());
+            System.out.println("email: " + emailField.getText());
+        });
+
         //add items to the GridPane
         gridPane.add(new Label("First Name: "), 0, 0);
         gridPane.add(firstNameField, 1, 0);
@@ -58,6 +68,12 @@ public class Main extends Application {
         //scene to return
         Scene mainScene = new Scene(gridPane, 300, 200);
 
+        //set the enter key to fire the button for the scene
+        mainScene.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                submitButton.fire();
+            }
+        });
         //return the scene
         return mainScene;
     }
