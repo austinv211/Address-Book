@@ -13,12 +13,16 @@ import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import java.util.InputMismatchException;
 
 
 public class Main extends Application {
@@ -43,13 +47,15 @@ public class Main extends Application {
 
         //set handler for submit button
         submitButton.setOnAction(event -> {
-            if (emailField.getText().contains("@") && emailField.getText().endsWith(".com")) {
-                System.out.println("firstName: " + firstNameField.getText());
-                System.out.println("lastName: " + lastNameField.getText());
-                System.out.println("email: " + emailField.getText());
+            try {
+                new Person(firstNameField.getText(), lastNameField.getText(), emailField.getText());
             }
-            else {
-                System.out.println("ERROR: Email not valid");
+            catch (InputMismatchException ex) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Invalid Email Provided");
+                alert.setContentText("Please enter a valid email of the form: johndoe@email.com");
+                alert.initStyle(StageStyle.UNIFIED);
+                alert.show();
             }
         });
 
