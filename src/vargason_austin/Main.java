@@ -20,8 +20,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import java.awt.event.KeyEvent;
-
 
 public class Main extends Application {
     @Override
@@ -45,9 +43,14 @@ public class Main extends Application {
 
         //set handler for submit button
         submitButton.setOnAction(event -> {
-            System.out.println("firstName: " + firstNameField.getText());
-            System.out.println("lastName: " + lastNameField.getText());
-            System.out.println("email: " + emailField.getText());
+            if (emailField.getText().contains("@") && emailField.getText().endsWith(".com")) {
+                System.out.println("firstName: " + firstNameField.getText());
+                System.out.println("lastName: " + lastNameField.getText());
+                System.out.println("email: " + emailField.getText());
+            }
+            else {
+                System.out.println("ERROR: Email not valid");
+            }
         });
 
         //add items to the GridPane
@@ -74,6 +77,7 @@ public class Main extends Application {
                 submitButton.fire();
             }
         });
+
         //return the scene
         return mainScene;
     }
