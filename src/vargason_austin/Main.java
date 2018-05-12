@@ -39,26 +39,6 @@ public class Main extends Application {
         TableView<Person> personTableView = new TableView<>();
         HBox hBox = new HBox();
 
-        //items to add into Hbox
-        TextField firstNameField =  new TextField();
-        TextField lastNameField = new TextField();
-        TextField emailField = new TextField();
-        Button submitButton = new Button("Submit");
-
-        //set handler for submit button
-        submitButton.setOnAction(event -> {
-            try {
-                new Person(firstNameField.getText(), lastNameField.getText(), emailField.getText());
-            }
-            catch (InputMismatchException ex) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Invalid Email Provided");
-                alert.setContentText("Please enter a valid email of the form: johndoe@email.com");
-                alert.initStyle(StageStyle.UNIFIED);
-                alert.show();
-            }
-        });
-
         //set up columns for table
         TableColumn<Person, String> col_firstName = new TableColumn<Person, String>("FirstName");
         col_firstName.setCellValueFactory(new PropertyValueFactory<Person, String>("firstName"));
@@ -69,15 +49,28 @@ public class Main extends Application {
         TableColumn<Person, String> col_email = new TableColumn<Person, String>("Email");
         col_email.setCellValueFactory(new PropertyValueFactory<Person, String>("email"));
 
-
         //set the columns
         personTableView.getColumns().setAll(col_firstName, col_lastName, col_email);
 
         //set the items
-        personTableView.setItems(getPeople());
+        ObservableList<Person> personObservableList = getPeople();
+        personTableView.setItems(personObservableList);
 
-        //set the items
-        ObservableList<Person> people = getPeople();
+        //items to add into Hbox
+        TextField firstNameField =  new TextField();
+        TextField lastNameField = new TextField();
+        TextField emailField = new TextField();
+        Button submitButton = new Button("Submit");
+
+        //set handler for submit button
+        submitButton.setOnAction(event -> {
+            Person person = new Person(firstNameField.getText(), lastNameField.getText(), emailField.getText());
+            personObservableList.add(person);
+            //clear the text fields
+            firstNameField.clear();
+            lastNameField.clear();
+            emailField.clear();
+        });
 
         //set up HBox
         hBox.getChildren().addAll(firstNameField, lastNameField, emailField, submitButton);
