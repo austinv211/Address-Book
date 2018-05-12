@@ -1,64 +1,53 @@
+/*
+Name: Person.java
+Description: Class to store the data for a person
+Author: Austin Vargason
+Date Modified:
+*/
+
+//vargason_austin package
 package vargason_austin;
 
-import javafx.scene.control.Alert;
-import javafx.stage.StageStyle;
+//imports
+import java.io.*;
 
-import java.util.InputMismatchException;
-
-public class Person {
+public class Person implements Serializable {
     //data fields
     private String firstName;
     private String lastName;
     private String email;
+    private static final long serialVersionUID = 1L;
 
     //constructor
     public Person(String firstName, String lastName, String email) {
-        //if the email meets the parameters, set options
-        if (email.contains("@") && email.endsWith(".com")) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.email = email;
-
-            //show alert
-            showSuccessMessage();
-        }
-        else {
-            throw new InputMismatchException("Invalid email format provided");
-        }
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
-    //getters
+    //getters and setters
     public String getFirstName() {
-        String copyFirstName = copyString(this.firstName);
+        return firstName;
+    }
 
-        return copyFirstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        String copyLastName = copyString(this.lastName);
+        return lastName;
+    }
 
-        return copyLastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
-        String copyEmail = copyString(this.email);
-
         return email;
     }
 
-    //return copy of Strings
-    public String copyString(String oldString) {
-        String newString = new String(oldString);
-
-        return newString;
-    }
-
-    //method to show success message
-    private void showSuccessMessage() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.initStyle(StageStyle.UNIFIED);
-        alert.setContentText("Person object created successfully");
-        alert.show();
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     //toString method
