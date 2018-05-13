@@ -30,7 +30,7 @@ public class Main extends Application {
         //get previous data table
         ObservableList<Person> personObservableList = inputPersonData();
         Scene mainScene = getMainScene(personObservableList);
-        primaryStage.setTitle("Test Form");//set the title
+        primaryStage.setTitle("Address Book");//set the title
         primaryStage.setScene(mainScene);//set the scene
         primaryStage.show();//show the window
     }
@@ -81,6 +81,9 @@ public class Main extends Application {
             lastNameField.clear();
             emailField.clear();
 
+            //reset cursor
+            firstNameField.requestFocus();
+
             //save changes to file
             saveOutput(personObservableList);
         });
@@ -109,6 +112,9 @@ public class Main extends Application {
 
         file_deleteAll.setOnAction(event -> {
             personObservableList.removeAll(personObservableList);
+
+            //save the change
+            saveOutput(personObservableList);
         });
 
         fileMenu.getItems().add(file_deleteAll);
@@ -165,9 +171,7 @@ public class Main extends Application {
 
     //method to get People for Table
     public static ObservableList<Person> getPeople() {
-        Person austin = new Person("Austin", "Vargason", "vargasona@gmail.com");
-
-        ObservableList<Person> personObservableList = FXCollections.observableArrayList(austin);
+        ObservableList<Person> personObservableList = FXCollections.observableArrayList();
 
         return personObservableList;
     }
